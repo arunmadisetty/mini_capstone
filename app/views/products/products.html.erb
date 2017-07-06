@@ -1,0 +1,8 @@
+<h1>Knicks Gear</h1>
+
+<% @products.each do |product| %>
+  <h2><%= product.name %></h2>
+  <%= product.image %>
+  <h3><%= product.price %></h3>
+  <p><%= product.description %></p>
+<% end %>
