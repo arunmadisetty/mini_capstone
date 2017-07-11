@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   get "/knicksgear" => "products#index"
   get "/knicksgear/new" => "products#new"
   post "/knicksgear" => "products#create"
+  get "/knicksgear/:id/edit" => "products#edit"
+  patch "/knicksgear/:id" => "products#update"
   get "/knicksgear/:id" => "products#show"
 end
