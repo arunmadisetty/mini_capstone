@@ -1,3 +1,4 @@
+<div class="container">
 <h1>Knicks Gear</h1>
 <h2><%= @product.name %></h2>
 <img src="<%= @product.image %>">
@@ -5,4 +6,8 @@
 <p><%= @product.description %></p>
 
 <a href="/knicksgear/<%= @product.id %>/edit">Edit</a>
-<a href="/knicksgear">Return to main page</a>
+<%= form_tag "/knicksgear/#{@product.id}", method: "delete" do %>
+  <input type="submit" value="Delete this product">
+<% end %>
+<a href="/knicksgear">Back to main page</a>
+</div>

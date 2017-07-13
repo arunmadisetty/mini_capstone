@@ -1,11 +1,18 @@
-<h1>Knicks Gear</h1>
-
-<% @products.each do |product| %>
-  <a href="/knicksgear/<%= product.id %>"><h2><%= product.name %></h2></a>
-  <img src="<%= product.image %>">
-  <h3><%= product.price %></h3>
-  <p><%= product.description %></p>
+<div class="container">
+<% @products.each_slice(3) do |three_products| %>
+  <div class="row">
+  <% three_products.each do |product| %>
+    <div class="col-md-4">
+      <div class="well">
+        <a href="/knicksgear/<%= product.id %>"><h2><%= product.name %></h2></a>
+        <img src="<%= product.image %>">
+        <h3><%= product.price %></h3>
+        <p><%= product.description %></p>
+      </div>
+    </div>
+  <% end %>
+  </div>
 <% end %>
+  <h2><a href="/knicksgear/new">Add a new product</a></h2>
 
-<h2><a href="/knicksgear/new">Add a new product</a></h2>
-
+</div>
