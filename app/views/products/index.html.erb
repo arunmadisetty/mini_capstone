@@ -4,9 +4,10 @@
   <% three_products.each do |product| %>
     <div class="col-md-4">
       <div class="well">
-        <a href="/knicksgear/<%= product.id %>"><h2><%= product.name %></h2></a>
+        <a href="/knicksgear/<%= product.id %>"><h2><%= product.name %></h2>
         <img src="<%= product.image %>">
-        <h3><%= product.price %></h3>
+        <h3><%= product.price %></h3></a>
+        <h5><%= product.sale_message %></h5>
         <p><%= product.description %></p>
       </div>
     </div>

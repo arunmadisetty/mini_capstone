@@ -2,7 +2,10 @@
 <h1>Knicks Gear</h1>
 <h2><%= @product.name %></h2>
 <img src="<%= @product.image %>">
-<h3><%= @product.price %></h3>
+<h3>Price: <%= @product.price %></h3>
+<h5>Tax: <%= @product.tax.round(2) %></h5>
+<h5>Total: <%= @product.total.round(2) %></h5>
+<h5><%= @product.sale_message %></h5>
 <p><%= @product.description %></p>
 
 <a href="/knicksgear/<%= @product.id %>/edit">Edit</a>
