@@ -1,6 +1,19 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all
+    sort_attribute = params[:sort_by]
+    sort_whichorder = params[:sort_order]
+    sort_discount = params[:discounted]
+
+    if sort_attribute && sort_whichorder
+      @products = Product.all.order(sort_attribute => sort_whichorder)
+
+    elsif sort_discount
+      @product = Product.where("price < ?", 20)
+
+    else
+      @products = Product.all
+    end
+
     render "index.html.erb"
   end
 
@@ -22,7 +35,9 @@ class ProductsController < ApplicationController
       description: params[:form_description]
     )
     newproduct.save
-    render "create.html.erb"
+    #render "create.html.erb"
+    flash[:success]="New product added."
+    redirect_to "/knicksgear"
   end
 
   def edit
@@ -39,13 +54,17 @@ class ProductsController < ApplicationController
     @product.image = params[:form_image]
     @product.description = params[:form_description]
     @product.save
-    render "update.html.erb"
+    #render "update.html.erb"
+    flash[:success]="Product successfully updated."
+    redirect_to "/knicksgear/#{@product.id}"
   end
 
   def destroy
     product_id = params[:id]
     @product = Product.find_by(id: product_id)
     @product.destroy
-    render "destroy.html.erb"
+    #render "destroy.html.erb"
+    flash[:danger]="Product deleted."
+    redirect_to "/knicksgear"
   end
 end

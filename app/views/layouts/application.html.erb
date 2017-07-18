@@ -20,7 +20,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Knicks Gear</a>
+      <a class="navbar-brand" href="/knicksgear">Knicks Gear</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -48,6 +48,7 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="/knicksgear?discounted=true">Discount Items</a></li>
         <li><a href="#">Link</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -64,7 +65,12 @@
   </div><!-- /.container-fluid -->
 </nav>
     <div class="container">
-
+    <% flash.each do |name,message| %>
+      <div class="alert alert-<%= name %> alert-dismissible fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</span><span class="sr-only">Close</span></button>
+          <%= message.html_safe %>
+      </div>
+    <% end %>
     </div>
     <%= yield %>
   </body>

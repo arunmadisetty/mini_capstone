@@ -8,9 +8,9 @@
 <h5><%= @product.sale_message %></h5>
 <p><%= @product.description %></p>
 
-<a href="/knicksgear/<%= @product.id %>/edit">Edit</a>
+<a type="button" class="btn btn-default" href="/knicksgear/<%= @product.id %>/edit">Edit</a>
 <%= form_tag "/knicksgear/#{@product.id}", method: "delete" do %>
-  <input type="submit" value="Delete this product">
+  <input type="submit" class="btn btn-default" value="Delete this product">
 <% end %>
-<a href="/knicksgear">Back to main page</a>
+<a type="button" class="btn btn-default" href="/knicksgear">Back to main page</a>
 </div>
