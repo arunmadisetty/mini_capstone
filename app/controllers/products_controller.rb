@@ -3,15 +3,20 @@ class ProductsController < ApplicationController
     sort_attribute = params[:sort_by]
     sort_whichorder = params[:sort_order]
     sort_discount = params[:discounted]
+    search = params[:search_term]
 
-    if sort_attribute && sort_whichorder
+    if search
+      @products = Product.where("name ILIKE ?", "%" + search + "%")
+
+    elsif sort_attribute && sort_whichorder
       @products = Product.all.order(sort_attribute => sort_whichorder)
 
     elsif sort_discount
-      @product = Product.where("price < ?", 20)
+      @products = Product.where("price < ?", 20)
 
     else
       @products = Product.all
+
     end
 
     render "index.html.erb"
@@ -67,4 +72,5 @@ class ProductsController < ApplicationController
     flash[:danger]="Product deleted."
     redirect_to "/knicksgear"
   end
+
 end

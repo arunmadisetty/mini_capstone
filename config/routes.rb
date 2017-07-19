@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get "/knicksgear/:id/edit" => "products#edit"
   patch "/knicksgear/:id" => "products#update"
   delete "/knicksgear/:id" => "products#destroy"
+  
 end
