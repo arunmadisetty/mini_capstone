@@ -72,5 +72,5 @@ class ProductsController < ApplicationController
     flash[:danger]="Product deleted."
     redirect_to "/knicksgear"
   end
-
+  
 end

@@ -1,11 +1,14 @@
 <div class="container">
 <h2><%= @product.name %></h2>
-<img src="<%= @product.image %>">
+<% @product.images.each do |image| %>
+<img src="<%= image.url %>">
+<% end %>
 <h3>Price: <%= @product.price %></h3>
 <h5>Tax: <%= @product.tax.round(2) %></h5>
 <h5>Total: <%= @product.total.round(2) %></h5>
 <h5><%= @product.sale_message %></h5>
 <p><%= @product.description %></p>
+<p>Supplier: <%=@product.supplier.name %></p>
 
 <a type="button" class="btn btn-default" href="/knicksgear/<%= @product.id %>/edit">Edit</a>
 <%= form_tag "/knicksgear/#{@product.id}", method: "delete" do %>
