@@ -29,6 +29,7 @@ class ProductsController < ApplicationController
   end
 
   def new
+    @suppliers = Supplier.all
     render "new.html.erb"
   end
 
@@ -36,9 +37,14 @@ class ProductsController < ApplicationController
     newproduct = Product.new(
       name: params[:form_name],
       price: params[:form_price],
-      image: params[:form_image],
+      #image: params[:form_image],
       description: params[:form_description]
     )
+    Image.create(
+      url: params[:image],
+      product_id: @products.id
+      )
+
     newproduct.save
     #render "create.html.erb"
     flash[:success]="New product added."
@@ -56,7 +62,7 @@ class ProductsController < ApplicationController
     @product = Product.find_by(id: product_id)
     @product.name = params[:form_name]
     @product.price = params[:form_price]
-    @product.image = params[:form_image]
+    #@product.image = params[:form_image]
     @product.description = params[:form_description]
     @product.save
     #render "update.html.erb"
