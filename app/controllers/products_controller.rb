@@ -6,17 +6,21 @@ class ProductsController < ApplicationController
     search = params[:search_term]
 
     if search
-      @products = Product.where("name ILIKE ?", "%" + search + "%")
-
-    elsif sort_attribute && sort_whichorder
-      @products = Product.all.order(sort_attribute => sort_whichorder)
+      @products = current_user.products.where("name ILIKE ?", "%" + search + "%")
+      #@products = Product.where("name ILIKE ?", "%" + search + "%")
 
     elsif sort_discount
-      @products = Product.where("price < ?", 20)
+      @products = current_user.products.where("price < ?", 20)
+      #@products = Product.where("price < ?", 20)
 
     else
-      @products = Product.all
+      @products = current_user.products # don't need .all here?
+      #@products = Product.all
 
+    end
+
+    if sort_attribute && sort_whichorder
+      @products = Product.order(sort_attribute => sort_whichorder)
     end
 
     render "index.html.erb"
@@ -25,6 +29,7 @@ class ProductsController < ApplicationController
   def show
     product_id = params[:id]
     @product = Product.find_by(id: product_id)
+    
     render "show.html.erb"
   end
 
@@ -34,18 +39,17 @@ class ProductsController < ApplicationController
   end
 
   def create
-    newproduct = Product.new(
+    newproduct = Product.create(
       name: params[:form_name],
       price: params[:form_price],
       #image: params[:form_image],
       description: params[:form_description]
     )
+
     Image.create(
       url: params[:image],
       product_id: @products.id
       )
-
-    newproduct.save
     #render "create.html.erb"
     flash[:success]="New product added."
     redirect_to "/knicksgear"
