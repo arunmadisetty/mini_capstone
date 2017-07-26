@@ -23,13 +23,18 @@ class ProductsController < ApplicationController
       @products = Product.order(sort_attribute => sort_whichorder)
     end
 
+    category_name = params[:category]
+    if category_name
+      category = Category.find_by(name: category_name)
+      @products = category.products
+    end
+
     render "index.html.erb"
   end
 
   def show
     product_id = params[:id]
     @product = Product.find_by(id: product_id)
-    
     render "show.html.erb"
   end
 

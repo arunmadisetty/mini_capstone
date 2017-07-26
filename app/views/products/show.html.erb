@@ -1,7 +1,11 @@
 <div class="container">
 <h2><%= @product.name %></h2>
 <% @product.images.each do |image| %>
-<img src="<%= image.url %>">
+  <img src="<%= image.url %>">
+<% end %>
+<h3>Categories: </h3>
+<% @product.categories.each do |category| %>
+  <h3><%= category.name %></h3>
 <% end %>
 <h3>Price: <%= @product.price %></h3>
 <h5>Tax: <%= @product.tax.round(2) %></h5>
