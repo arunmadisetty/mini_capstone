@@ -7,8 +7,8 @@ class OrdersController < ApplicationController
 
     order = Order.create(
       user_id: current_user.id,
-      product_id: params[:form_product_id],
-      quantity: params[:form_quantity],
+      # product_id: params[:form_product_id],
+      # quantity: params[:form_quantity],
       subtotal: subtotal.round(2),
       tax: tax.round(2),
       total: total.round(2)

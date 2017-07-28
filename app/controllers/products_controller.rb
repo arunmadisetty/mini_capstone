@@ -6,16 +6,16 @@ class ProductsController < ApplicationController
     search = params[:search_term]
 
     if search
-      @products = current_user.products.where("name ILIKE ?", "%" + search + "%")
-      #@products = Product.where("name ILIKE ?", "%" + search + "%")
+      # @products = current_user.products.where("name ILIKE ?", "%" + search + "%")
+      @products = Product.where("name ILIKE ?", "%" + search + "%")
 
     elsif sort_discount
-      @products = current_user.products.where("price < ?", 20)
-      #@products = Product.where("price < ?", 20)
+      # @products = current_user.products.where("price < ?", 20)
+      @products = Product.where("price < ?", 20)
 
     else
-      @products = current_user.products # don't need .all here?
-      #@products = Product.all
+      # @products = current_user.products # don't need .all here?
+      @products = Product.all
 
     end
 

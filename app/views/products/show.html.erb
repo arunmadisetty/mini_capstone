@@ -1,32 +1,29 @@
 <div class="container">
-<h2><%= @product.name %></h2>
-<% @product.images.each do |image| %>
-  <img src="<%= image.url %>">
-<% end %>
-<h3>Categories: </h3>
-<% @product.categories.each do |category| %>
-  <h3><%= category.name %></h3>
-<% end %>
-<h3>Price: <%= @product.price %></h3>
-<h5>Tax: <%= @product.tax.round(2) %></h5>
-<h5>Total: <%= @product.total.round(2) %></h5>
-<h5><%= @product.sale_message %></h5>
-<p><%= @product.description %></p>
-<p>Supplier: <%= @product.supplier.name %></p>
+  <h2><%= @product.name %></h2>
+  <% @product.images.each do |image| %>
+    <img src="<%= image.url %>">
+  <% end %>
+  <h3>Categories: </h3>
+    <%= @product.categories.map {|category| category.name}.join(", ") %>
 
-<%= form_tag "/orders", method: "post" do %>
-  <div class="form-group">
-    Product ID: <input type="text" class="form-control" value="" name="form_product_id">
-  </div>
-  <div class="form-group">
-    Quantity: <input type="text" class="form-control" value="" name="form_quantity">
-  </div>
-  <input type="submit" class="btn btn-default" value="Buy">
-<% end %>
+  <h3>Price: <%= @product.price %></h3>
+  <h5>Tax: <%= @product.tax.round(2) %></h5>
+  <h5>Total: <%= @product.total.round(2) %></h5>
+  <h5><%= @product.sale_message %></h5>
+  <p><%= @product.description %></p>
+  <p>Supplier: <%= @product.supplier.name %></p>
 
-<a type="button" class="btn btn-default" href="/knicksgear/<%= @product.id %>/edit">Edit</a>
-<%= form_tag "/knicksgear/#{@product.id}", method: "delete" do %>
-  <input type="submit" class="btn btn-default" value="Delete this product">
-<% end %>
-<a type="button" class="btn btn-default" href="/knicksgear">Back to main page</a>
+  <%= form_tag "/carted_products", method: "post" do %>
+    <input type="hidden" class="form-control" name="form_product_id" value="<%= @product.id %>">
+    <div class="form-group">
+      Quantity: <input type="text" class="form-control" value="" name="form_quantity">
+    </div>
+    <input type="submit" class="btn btn-default" value="Add to Cart">
+  <% end %>
+
+  <a type="button" class="btn btn-default" href="/knicksgear/<%= @product.id %>/edit">Edit</a>
+  <%= form_tag "/knicksgear/#{@product.id}", method: "delete" do %>
+    <input type="submit" class="btn btn-default" value="Delete this product">
+  <% end %>
+  <a type="button" class="btn btn-default" href="/knicksgear">Back to main page</a>
 </div>
