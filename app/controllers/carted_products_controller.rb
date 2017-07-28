@@ -1,7 +1,6 @@
 class CartedProductsController < ApplicationController
   def index
-    @carted_products = current_user.carted_products
-
+    @user_shopping_cart = current_user.carted_products.where(status: "carted")
     render "index.html.erb"
   end
 
