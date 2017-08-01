@@ -1,33 +1,42 @@
 <div class="container">
   <h1>Add a new product into the Knicks Gear website!</h1>
-
+  <% if @newproduct.errors.any? %>
+    <div id="error_explanation">
+    <h2><%= pluralize(@newproduct.errors.count, "error") %> prohibited this product from being saved:</h2>
+ 
+    <ul>
+    <% @newproduct.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
   <%= form_tag "/knicksgear", method: "post" do %>
   <div class="form-group">
-    Name: <input type="text" class="form-control" name="form_name">
+    Name: <input type="text" class="form-control" name="form_name" value="<%= @newproduct.name %>">
   </div>
-
   <div class="form-group">
-    Price: <input type="text" class="form-control" name="form_price">
+    Price: <input type="text" class="form-control" name="form_price" value="<%= @newproduct.price %>">
   </div>
-
   <div class="form-group">
     Image: <input type="text" class="form-control" name="form_image">
     
   </div>
 
+  <div class="form-group">
+    Description: <input type="text" class="form-control" name="form_description" value="<%= @newproduct.description %>">
+  </div>
   <div>
+    Supplied by: 
     <select name="supplier_id">
       <% @suppliers.each do |supplier| %>
-        <option><%= supplier.supplier_id supplier.name %></option>
+        <option value="<%= supplier.id %>"><%= supplier.name %></option>
       <% end %>
     </select>
   </div>
-
-  <div class="form-group">
-    Description: <input type="text" class="form-control" name="form_description">
-  </div>
   <input type="submit" name="Add product">
   <% end %>
+
 
   
 </div>

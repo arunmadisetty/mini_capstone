@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_admin!, except: [:index, :show]
+  
   def index
     sort_attribute = params[:sort_by]
     sort_whichorder = params[:sort_order]
@@ -39,34 +41,57 @@ class ProductsController < ApplicationController
   end
 
   def new
+    # unless current_user && current_user.admin
+    #   redirect_to "/knicksgear"
+    #   return
+    # end
+    @newproduct = Product.new
     @suppliers = Supplier.all
     render "new.html.erb"
   end
 
   def create
-    newproduct = Product.create(
+    # unless current_user && current_user.admin
+    #   redirect_to "/knicksgear"
+    #   return
+    # end
+    @newproduct = Product.new(
       name: params[:form_name],
       price: params[:form_price],
       #image: params[:form_image],
       description: params[:form_description]
     )
-
-    Image.create(
-      url: params[:image],
-      product_id: @products.id
+    # The following if statement will check if the Product can be saved, and if it can it will continue, otherwise it will return to the new.html.erb page.
+    if @newproduct.save
+      Image.create(
+        url: params[:image],
+        product_id: @products.id
       )
-    #render "create.html.erb"
-    flash[:success]="New product added."
-    redirect_to "/knicksgear"
+      #render "create.html.erb"
+      flash[:success]="New product added."
+      redirect_to "/knicksgear"
+    else
+      # These lines are an attempt to recreate the contents of the new method. We render (as opposed to redirect) because we don't want the page to refresh and lose our data.
+      @suppliers = Supplier.all
+      render "new.html.erb"
+    end
   end
 
   def edit
+    # unless current_user && current_user.admin
+    #   redirect_to "/knicksgear"
+    #   return
+    # end
     product_id = params[:id]
     @product = Product.find_by(id: product_id)
     render "edit.html.erb"
   end
 
   def update
+    # unless current_user && current_user.admin
+    #   redirect_to "/knicksgear"
+    #   return
+    # end
     product_id = params[:id]
     @product = Product.find_by(id: product_id)
     @product.name = params[:form_name]
@@ -80,6 +105,10 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+    # unless current_user && current_user.admin
+    #   redirect_to "/knicksgear"
+    #   return
+    # end
     product_id = params[:id]
     @product = Product.find_by(id: product_id)
     @product.destroy

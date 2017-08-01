@@ -1,4 +1,5 @@
 class CartedProductsController < ApplicationController
+  before_action :authenticate_user!
   def index
     @user_shopping_cart = current_user.carted_products.where(status: "carted")
     render "index.html.erb"
@@ -9,7 +10,10 @@ class CartedProductsController < ApplicationController
     # subtotal = new_carted_product.price * params[:form_quantity].to_i
     # tax = subtotal * 0.09
     # total = subtotal * 1.09
-
+    # unless current_user && current_user.admin
+    #   redirect_to "/knicksgear"
+    #   return
+    # end
     carted_product = CartedProduct.create(
       user_id: current_user.id,
       product_id: params[:form_product_id],

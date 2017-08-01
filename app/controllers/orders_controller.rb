@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
+  
   def create
     user_shopping_cart = current_user.carted_products.where(status: "carted")
     
@@ -32,5 +34,8 @@ class OrdersController < ApplicationController
     redirect_to "/orders/#{order.id}"
   end
 
+  def show
+    render "show.html.erb"
+  end
 
 end
